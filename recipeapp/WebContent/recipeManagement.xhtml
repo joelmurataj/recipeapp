@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+	<ui:include name="style" src="/component/styles1.xhtml" />
+
+</h:head>
+<h:body>
+
+	<ui:insert>
+		<ui:include name="header" src="/component/header.xhtml" />
+	</ui:insert>
+
+	<div id="wrapper">
+		<ui:insert>
+			<ui:include name="sidebar" src="/component/sideBar.xhtml" />
+		</ui:insert>
+
+		<!-- C O N T E N T -->
+
+		<h:form id="recipesForm">
+			<!-- DataTables Example -->
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fas fa-table"></i> Recipes
+				</div>
+				<div class="card-body" style="width: 1250px">
+					<div class="table-responsive">
+						<p:dataGrid var="recipeDto"
+							value="#{recipeManagementBean.recipeDtoList}" columns="3"
+							layout="grid" rows="10" paginator="true" id="recipeDto"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+							<f:facet name="header">
+            					Recipes
+            					<p:outputPanel>
+									<h:outputText value="Search recipe by title:" />
+									<p:inputText id="globalFilter" style="width:150px"
+										placeholder="Enter keyword" value="#{recipeManagementBean.recipeDto.title}">
+										<p:ajax event="keyup" listener="#{recipeManagementBean.filterByTitul()}"
+											update="recipeDto" />
+									</p:inputText>
+								</p:outputPanel>
+        					</f:facet>
+
+							<p:panel header="#{recipeDto.title}" style="text-align:center">
+								<h:panelGrid columns="1" style="width:100%">
+									<h:graphicImage value="#{recipeDto.image}" height="200"/>
+									<h:outputText value="#{recipeDto.username}" />
+
+									<p:commandLink update=":recipesForm:recipeDetail"
+										oncomplete="PF('recipeDialog').show()" title="Recipe Detail">
+										<i class="fas fa-info"></i>
+										<f:setPropertyActionListener value="#{recipeDto}"
+											target="#{recipeManagementBean.selectedRecipe}" />
+									</p:commandLink>
+								</h:panelGrid>
+							</p:panel>
+
+						</p:dataGrid>
+
+
+					</div>
+				</div>
+			</div>
+			<p:dialog header="Recipe Info" widgetVar="recipeDialog" modal="true"
+				showEffect="fade" hideEffect="fade" resizable="false" width="25%">
+				<p:outputPanel id="recipeDetail" style="text-align:center;">
+					<p:panelGrid columns="2"
+						rendered="#{not empty recipeManagementBean.selectedRecipe}"
+						columnClasses="label,value" style="width:100%">
+						<f:facet name="header">
+							<h:graphicImage value="#{recipeManagementBean.selectedRecipe.image}" height="150"/>
+						</f:facet>
+
+						<h:outputText value="Title:" />
+						<h:outputText value="#{recipeManagementBean.selectedRecipe.title}" />
+
+						<h:outputText value="Chef:" />
+						<h:outputText
+							value="#{recipeManagementBean.selectedRecipe.username}" />
+
+						<h:outputText value="Category:" />
+						<h:outputText
+							value="#{recipeManagementBean.selectedRecipe.categoryName}" />
+
+						<h:outputText value="Description:" />
+						<h:outputText
+							value="#{recipeManagementBean.selectedRecipe.description}" />
+							
+						<h:outputText value="Date:" />
+						<h:outputText value="#{recipeManagementBean.selectedRecipe.date}" />
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</div>
+
+	<!-- /C O N T E N T -->
+
+</h:body>
+</html>

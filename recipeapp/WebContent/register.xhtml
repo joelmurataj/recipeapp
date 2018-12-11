@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<ui:insert>
+		<ui:include name="style" src="/component/styles1.xhtml" />
+	</ui:insert>
+</h:head>
+<h:body class="bg-dark">
+	<div class="container">
+		<div class="card card-login mx-auto mt-5">
+			<div class="card-header">Sing Up</div>
+			<div class="card-body">
+
+				<h:form id="form1" style="width:100%">
+				<p:growl id="growl" life="2500" severity="info warn" />
+				<h:messages style="color:red" id="message" infoStyle="display:none"
+				warnStyle="display:none"/>
+
+					<div class="form-group">
+						<div class="form-label-group">
+							<p:inputText value="#{userManagementBean.userDto.username}" label="username"
+								required="true" id="username" align="middle"
+								class="form-control"
+								requiredMessage="Ju lutem plotesoni username">
+								</p:inputText>
+								<h:message id="m" for="username" style="color:red"></h:message>
+							<label for="inputEmail">Username</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="form-label-group">
+							<p:inputText value="#{userManagementBean.userDto.email}" label="email"
+								required="true" id="email" align="middle"
+								class="form-control"
+								requiredMessage="Ju lutem plotesoni emailin" validatorMessage="Ju lutem kontrolloni emailin">
+								<f:validateRegex
+									pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
+									</p:inputText>
+							<label for="inputEmail">Email</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="form-label-group">
+							<p:password value="#{userManagementBean.userDto.password}" label="Password"
+								class="form-control" required="true" id="Password"
+								requiredMessage="Ju lutem plotesoni passwordin" validatorMessage="passwordi duhet te kete te pakten 6 shkronja: nje shkronje te madhe,nje karakter special dhe nje numer">
+								<f:validateRegex
+									pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{6,20})" />
+								</p:password>
+							<label for="inputPassword">Password</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="form-label-group">
+							<p:password value="#{userManagementBean.userDto.confirmPassword}" label="ConfirmPassword"
+								class="form-control" required="true" id="ConfirmPassword"
+								requiredMessage="Ju lutem plotesoni passwordin" >
+								<f:validateRegex
+									pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{6,20})" />
+									</p:password>
+							<label for="inputConfirmPassword">ConfirmPassword</label>
+						</div>
+					</div>
+					<p:commandLink class="btn btn-primary btn-block" type="submit"
+						value="Sign up" update="message growl" action="#{userManagementBean.createUser()}" 
+						oncomplete="if (args &amp;&amp; !args.validationFailed)"/>
+				</h:form>
+
+			</div>
+		</div>
+	</div>
+
+</h:body>
+</html>

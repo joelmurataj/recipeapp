@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<ui:insert>
+		<ui:include name="style" src="/component/styles1.xhtml" />
+	</ui:insert>
+</h:head>
+<h:body class="bg-dark">
+	<div class="container">
+		<div class="card card-login mx-auto mt-5">
+			<div class="card-header">Login</div>
+			<div class="card-body">
+
+				<h:form id="form1" style="width:100%">
+					<h:messages style="color:red" id="message" infoStyle="display:none"
+				warnStyle="display:none"/>
+				<p:growl id="growl" life="2500" severity="info warn" />
+
+					<div class="form-group">
+						<div class="form-label-group">
+							<p:inputText value="#{loginBean.username}" label="username"
+								required="true" id="username" align="middle"
+								class="form-control"
+								requiredMessage="Ju lutem plotesoni username"></p:inputText>
+							<label for="inputUsername">Username</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="form-label-group">
+							<p:password value="#{loginBean.password}" label="Password"
+								class="form-control" required="true" id="Password"
+								requiredMessage="Ju lutem plotesoni passwordin" />
+							<label for="inputPasswrod">Password</label>
+						</div>
+					</div>
+					<p:commandLink class="btn btn-primary btn-block" type="submit"
+						value="Log in" update="message"
+						oncomplete="if (args &amp;&amp; !args.validationFailed)"
+						action="#{loginBean.logIn()}" />
+					<h:outputLink value="/recipeapp/register.xhtml"> If you don't have an account,click here </h:outputLink>
+
+				</h:form>
+
+			</div>
+		</div>
+	</div>
+
+</h:body>
+</html>
